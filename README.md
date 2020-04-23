@@ -19,6 +19,37 @@ Currently, this project contains:
  * kconfig: Standalone conf and mconf executable which reads Kconfig source
    code and output .config.
 
+## kconfig
+
+### Building kconfig standalone
+
+```
+ $ git clone https://github.com/WangNan0/kbuild-standalone.git
+ $ cd kbuild-standalone
+ $ mkdir build
+ $ cd build
+ $ make -C ../ -f Makefile.kconfig O=`pwd` -j
+ $ ls ./kconfig/*conf
+   ./kconfig/conf  ./kconfig/mconf
+```
+
+`conf` and `mconf` can be used to config linux kernel:
+
+```
+ $ git clone https://github.com/torvalds/linux.git
+ $ cd linux
+
+# menuconfig
+ $ SRCARCH=x86 srctree=`pwd` CC=gcc /path/to/mconf ./Kconfig
+
+# allyesconfig
+ SRCARCH=x86 srctree=`pwd` CC=gcc /path/to/conf --allyesconfig ./Kconfig
+
+# defconfig
+ SRCARCH=arm srctree=`pwd` CC=arm-none-eabi-gcc /path/to/conf \
+	--defconfig=arch/arm/configs/vexpress_defconfig ./Kconfig
+```
+
 ## Maintenance
 
 This project keeps syncing with Linux kernel. When Linux has a new release,
