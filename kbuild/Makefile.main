@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2020 Wang Nan <pi3orama@163.com>
+# Copyright (C) 2020 Huawei Inc.
+
+# Main part of kbuild standalone makefile
+# Build $(KBUILD_STANDALONE_TARGETS) using kbuild.
+
+building_out_of_srctree := 1
+
+srctree := .source
+objtree := .
+VPATH	:= $(srctree)
+
+export building_out_of_srctree srctree objtree VPATH
+
+PHONY += all
+
+_all: all
+
+KBUILD_MODULES :=
+KBUILD_BUILTIN := 1
+
+export KBUILD_MODULES KBUILD_BUILTIN
+
+include scripts/Kbuild.include
+
+build_targets := $(addprefix _build_,$(KBUILD_STANDALONE_TARGETS))
+
+all: $(build_targets)
+
+$(build_targets):
+	$(MAKE) $(build)=$(patsubst _build_%,%,$@) $($(addsuffix _GOAL, $(patsubst _build_%,%,$@)))

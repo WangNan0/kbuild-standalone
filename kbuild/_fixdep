@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2020 Wang Nan <pi3orama@163.com>
+# Copyright (C) 2020 Huawei Inc.
+
+
+# A fake fixdep for kbuild-standalone, make building continue without
+# real fixdep.
+# fixdep now is a fundatmental part of kbuild. Since kbuild code is kept
+# unchanged and fixdep is provided separatly, providing a fake fixdep
+# is a simple way to make building keep going.
+
+if [ -x "$(command -v kbuild-fixdep)" ]
+then
+	exec kbuild-fixdep "$@"
+else
+	exit 0
+fi

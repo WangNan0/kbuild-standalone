@@ -1,0 +1,64 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2020 Wang Nan <pi3orama@163.com>
+# Copyright (C) 2020 Huawei Inc.
+
+# Wrapper for kbuild standalone: create an transition source code directory.
+# Create symlinks for scripts and targets to make it similar to Linux kernel's
+# source code directory.
+
+ifeq ("$(origin O)", "command line")
+  KBUILD_OUTPUT := $(O)
+else
+  $(error Must provide an 'O' option)
+endif
+
+abs_objtree := $(shell mkdir -p $(KBUILD_OUTPUT) && cd $(KBUILD_OUTPUT) && pwd)
+$(if $(abs_objtree),, \
+     $(error failed to create output directory "$(KBUILD_OUTPUT)"))
+
+abs_trans_srctree := $(shell mkdir -p $(abs_objtree)/.source && cd $(KBUILD_OUTPUT)/.source && pwd)
+$(if $(abs_trans_srctree),, \
+     $(error failed to create transition source directory "$(KBUILD_OUTPUT)/.source"))
+
+export abs_objtree abs_trans_srctree
+
+ifeq ($(abs_objtree),$(abs_srctree))
+  $(error In-tree-build is not supported. Set "O" to build directory)
+endif
+# Set include-dir for next stage, so we can include scripts/xxx
+# (abs_kbuildtree) and Makefile (abs_srctree).
+MAKEFLAGS += --include-dir=$(abs_srctree) --include-dir=$(abs_kbuildtree)
+
+PHONY += $(MAKECMDGOALS) sub-make
+
+$(filter-out _all sub-make $(lastword $(MAKEFILE_LIST)), $(MAKECMDGOALS)) _all: sub-make
+	@:
+
+# Invoke a second make in the output directory, passing relevant variables
+sub-make: prepare_objtree
+	$(Q)$(MAKE) -C $(abs_objtree) -f $(abs_top_makefile) $(MAKECMDGOALS)
+
+prepare_targets := $(addprefix _prepare_trans_src_dir_, $(KBUILD_STANDALONE_TARGETS))
+
+prepare_objtree: prepare_scripts $(prepare_targets)
+	if [ ! -e $(abs_objtree)/scripts/basic/fixdep ]; then						\
+		mkdir -p $(abs_objtree)/scripts/basic;							\
+		cp $(abs_kbuildtree)/_fixdep $(abs_objtree)/scripts/basic/fixdep;			\
+	fi
+
+ifeq ($(abs_srctree),$(realpath $(abs_trans_srctree)/../.. ))
+_rel_srctree := ../..
+else
+_rel_srctree := $(abs_srctree)
+endif
+
+$(prepare_targets):
+	_trans_src_dir=$(patsubst _prepare_trans_src_dir_%,%,$@);					\
+	if [ ! -L $(abs_trans_srctree)/$(patsubst _prepare_trans_src_dir_%,%,$@) ]; then		\
+		ln -fsn $(_rel_srctree)/$(patsubst _prepare_trans_src_dir_%,%,$@) $(abs_trans_srctree);	\
+	fi
+
+prepare_scripts:
+	if [ ! -L $(abs_trans_srctree)/scripts ]; then							\
+		ln -fsn $(abs_kbuildtree)/scripts $(abs_trans_srctree) ;				\
+	fi

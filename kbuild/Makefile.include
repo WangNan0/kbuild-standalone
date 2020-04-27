@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2020 Wang Nan <pi3orama@163.com>
+# Copyright (C) 2020 Huawei Inc.
+
+ifeq ($(output_is_ready),)
+# output_is_ready is not set, this is first pass. Directly included
+# by original makefile.
+# abs_kbuildtree is directory of kbuild standalone
+# abs_srctree is the Makefile which include Makefile.include.
+# It should be the makefile directly include this file.
+  abs_kbuildtree	:= $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
+  abs_srctree		:= $(realpath $(dir $(firstword $(MAKEFILE_LIST))))
+  abs_top_makefile	:= $(realpath $(firstword $(MAKEFILE_LIST)))
+  export abs_kbuildtree abs_srctree abs_top_makefile
+
+  include $(abs_kbuildtree)/Makefile.output
+  output_is_ready := 1
+  export output_is_ready
+else
+  include $(abs_kbuildtree)/Makefile.env
+  include $(abs_kbuildtree)/Makefile.main
+endif
+
+# That's our default target when none is given on the command line
+PHONY := _all
+_all:
+
+PHONY += FORCE
+FORCE:
+
+# Declare the contents of the PHONY variable as phony.  We keep that
+# information in a variable so we can use it in if_changed and friends.
+.PHONY: $(PHONY)
