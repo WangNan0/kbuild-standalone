@@ -5,15 +5,19 @@
 # Top makefile of kbuild standalone. This is also a sample makefile
 # to show how to use kbuild standalone.
 #
-# `KBUILD_STANDALONE_PATH:`    directory where kbuild standalone is installed
 # `KBUILD_STANDALONE_TARGETS:` targets to build using kbuild standalone
 # `<target>_GOAL:`             make goals list passed to `<target>/Makefile`
 
-KBUILD_STANDALONE_PATH := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))/kbuild
-
 KBUILD_STANDALONE_TARGETS := fixdep kconfig
-
 kconfig_GOAL := kconfig/mconf kconfig/conf
 
+# Suggest to use pkg-config to find the location where Makefile.include
+# should be found. If it is not found, use internal kbuild.
+makefile_include := $(shell pkg-config --variable=makefile_include kbuild-standalone)
+ifeq($(makefile_include),)
+  kbuild_standalone_path := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))/kbuild
+  makefile_include := $(kbuild_standalone_path)/Makefile.include
+endif
+
 # include Makefile.include to invoke kbuild standalone.
-include $(KBUILD_STANDALONE_PATH)/Makefile.include
+include $(makefile_include)
