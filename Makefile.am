@@ -53,3 +53,5 @@ kbuild-mconf:
 
 __build:
 	$(MAKE) -C $(builddir) -f $(abs_top_srcdir)/Makefile.sample O=$(builddir)/__build
+
+.PHONY: __build
