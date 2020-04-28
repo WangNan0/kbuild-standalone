@@ -28,7 +28,7 @@ Currently, this project contains:
  $ cd kbuild-standalone
  $ mkdir build
  $ cd build
- $ make -C ../ -f Makefile.kconfig O=`pwd` -j
+ $ make -C ../ -f Makefile.sample O=`pwd` -j
  $ ls ./kconfig/*conf
    ./kconfig/conf  ./kconfig/mconf
 ```
@@ -49,6 +49,15 @@ Currently, this project contains:
  SRCARCH=arm srctree=`pwd` CC=arm-none-eabi-gcc /path/to/conf \
 	--defconfig=arch/arm/configs/vexpress_defconfig ./Kconfig
 ```
+
+## kbuild
+
+Makefile.sample is also an simple example about how kbuild standalone can be
+used in other project by simply setting following make variables:
+
+* `KBUILD_STANDALONE_PATH:`    directory where kbuild standalone is installed
+* `KBUILD_STANDALONE_TARGETS:` targets to build using kbuild standalone
+* `<target>_GOAL:`             make goals list passed to `<target>/Makefile`
 
 ## Maintenance
 
