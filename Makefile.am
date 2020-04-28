@@ -25,6 +25,9 @@ scripts_DATA	= kbuild/scripts/Makefile.build	\
 		  kbuild/scripts/Makefile.host	\
 		  kbuild/scripts/Kbuild.include
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = kbuild-standalone.pc
+
 localbins = kbuild-mconf kbuild-conf kbuild-fixdep
 
 all-local: $(localbins)

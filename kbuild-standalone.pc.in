@@ -1,0 +1,7 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+makefile_include=@datarootdir@/kbuild-standalone/Makefile.include
+
+Name: kbuild standalone
+Description: A standalone solution for kbuild and kconfig
+Version: @VERSION@
