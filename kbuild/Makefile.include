@@ -2,6 +2,9 @@
 # Copyright (C) 2020 Wang Nan <pi3orama@163.com>
 # Copyright (C) 2020 Huawei Inc.
 
+# If the user is running make -s (silent mode), suppress echoing of
+# commands
+
 ifeq ($(output_is_ready),)
 # output_is_ready is not set, this is first pass. Directly included
 # by original makefile.
@@ -13,6 +16,7 @@ ifeq ($(output_is_ready),)
   abs_top_makefile	:= $(realpath $(firstword $(MAKEFILE_LIST)))
   export abs_kbuildtree abs_srctree abs_top_makefile
 
+  include $(abs_kbuildtree)/Makefile.head
   include $(abs_kbuildtree)/Makefile.output
   output_is_ready := 1
   export output_is_ready

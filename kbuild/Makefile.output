@@ -28,6 +28,7 @@ endif
 # Set include-dir for next stage, so we can include scripts/xxx
 # (abs_kbuildtree) and Makefile (abs_srctree).
 MAKEFLAGS += --include-dir=$(abs_srctree) --include-dir=$(abs_kbuildtree)
+MAKEFLAGS += --no-print-directory
 
 PHONY += $(MAKECMDGOALS) sub-make
 
@@ -41,7 +42,7 @@ sub-make: prepare_objtree
 prepare_targets := $(addprefix _prepare_trans_src_dir_, $(KBUILD_STANDALONE_TARGETS))
 
 prepare_objtree: prepare_scripts $(prepare_targets)
-	if [ ! -e $(abs_objtree)/scripts/basic/fixdep ]; then						\
+	$(Q)if [ ! -e $(abs_objtree)/scripts/basic/fixdep ]; then						\
 		mkdir -p $(abs_objtree)/scripts/basic;							\
 		cp $(abs_kbuildtree)/_fixdep $(abs_objtree)/scripts/basic/fixdep;			\
 	fi
@@ -53,12 +54,11 @@ _rel_srctree := $(abs_srctree)
 endif
 
 $(prepare_targets):
-	_trans_src_dir=$(patsubst _prepare_trans_src_dir_%,%,$@);					\
-	if [ ! -L $(abs_trans_srctree)/$(patsubst _prepare_trans_src_dir_%,%,$@) ]; then		\
+	$(Q)if [ ! -L $(abs_trans_srctree)/$(patsubst _prepare_trans_src_dir_%,%,$@) ]; then		\
 		ln -fsn $(_rel_srctree)/$(patsubst _prepare_trans_src_dir_%,%,$@) $(abs_trans_srctree);	\
 	fi
 
 prepare_scripts:
-	if [ ! -L $(abs_trans_srctree)/scripts ]; then							\
+	$(Q)if [ ! -L $(abs_trans_srctree)/scripts ]; then							\
 		ln -fsn $(abs_kbuildtree)/scripts $(abs_trans_srctree) ;				\
 	fi
