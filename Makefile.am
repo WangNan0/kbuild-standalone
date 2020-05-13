@@ -7,7 +7,8 @@ EXTRA_DIST = configure.ac	\
 	     Makefile.sample	\
 	     kbuild		\
 	     kconfig		\
-	     fixdep
+	     fixdep		\
+	     unifdef
 
 doc_DATA = README.md
 pkgdir = $(datarootdir)/kbuild-standalone
@@ -28,7 +29,7 @@ scripts_DATA	= kbuild/scripts/Makefile.build	\
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = kbuild-standalone.pc
 
-localbins = kbuild-mconf kbuild-conf kbuild-fixdep
+localbins = kbuild-mconf kbuild-conf kbuild-fixdep kbuild-unifdef
 
 all-local: $(localbins)
 
@@ -42,7 +43,7 @@ install-exec-hook: $(localbins)
 uninstall-hook:
 	cd $(DESTDIR)$(bindir) && rm -f $(localbins)
 
-kbuild-mconf kbuild-conf kbuild-fixdep: __build
+kbuild-mconf kbuild-conf kbuild-fixdep kbuild-unifdef: __build
 
 kbuild-fixdep:
 	cp $(builddir)/__build/fixdep/fixdep $@
@@ -50,6 +51,8 @@ kbuild-conf:
 	cp $(builddir)/__build/kconfig/conf $@
 kbuild-mconf:
 	cp $(builddir)/__build/kconfig/mconf $@
+kbuild-unifdef:
+	cp $(builddir)/__build/unifdef/unifdef $@
 
 __build:
 	$(MAKE) -C $(builddir) -f $(abs_top_srcdir)/Makefile.sample O=$(builddir)/__build
