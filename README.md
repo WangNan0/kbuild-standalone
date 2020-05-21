@@ -18,6 +18,9 @@ make, instead of merging them into their own source code.
 Currently, this project contains:
  * kconfig: Standalone conf and mconf executable which reads Kconfig source
    code and output .config.
+ * kbuild: Basic kbuild makefile scripts are brought from Linux kernel. A wrapper
+   is provided to make it work standalone.
+ * fixdep, unifdef: Small tools in Linux kernel for building.
 
 ## kconfig
 
@@ -66,3 +69,9 @@ This project keeps syncing with Linux kernel. When Linux has a new release,
 we sync updates from Linux kernel to keep us identical with upstream.
 Therefore, we will not accept new feature or bugfix by our own. Instead, we
 try to make them upstream then sync them back.
+
+Version number of this project comes from source version of Linux kernel.
+It contains 2 or 3 digits. The first 2 digits are version and patchlevel
+of corresponding Linux kernel (for exmaple, 5.6). The third digit is vesion
+of this project itself. Each time when bumping Linux kernel version, the third
+digit would be reset to 0 and ignored.

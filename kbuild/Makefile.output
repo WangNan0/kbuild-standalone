@@ -23,7 +23,7 @@ $(if $(abs_trans_srctree),, \
 export abs_objtree abs_trans_srctree
 
 ifeq ($(abs_objtree),$(abs_srctree))
-  $(error In-tree-build is not supported. Set "O" to build directory)
+  $(error In-tree-building is not supported. Set "O" to build directory)
 endif
 # Set include-dir for next stage, so we can include scripts/xxx
 # (abs_kbuildtree) and Makefile (abs_srctree).
