@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2020 Wang Nan <pi3orama@163.com>
-# Copyright (C) 2020 Huawei Inc.
 
 # Main part of kbuild standalone makefile
 # Build $(KBUILD_STANDALONE_TARGETS) using kbuild.

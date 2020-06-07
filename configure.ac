@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2020 Wang Nan <pi3orama@163.com>
-# Copyright (C) 2020 Huawei Inc.
 
 # configure.ac for installing kbuild standalone
 # We use autotools because autotools is well supported

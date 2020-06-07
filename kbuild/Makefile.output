@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2020 Wang Nan <pi3orama@163.com>
-# Copyright (C) 2020 Huawei Inc.
 
 # Wrapper for kbuild standalone: create an transition source code directory.
 # Create symlinks for scripts and targets to make it similar to Linux kernel's
