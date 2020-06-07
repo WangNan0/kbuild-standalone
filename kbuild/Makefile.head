@@ -16,8 +16,6 @@ export LC_COLLATE LC_NUMERIC
 # Avoid interference with shell env settings
 unexport GREP_OPTIONS
 
-
-
 ifeq ("$(origin V)", "command line")
   KBUILD_VERBOSE = $(V)
 endif

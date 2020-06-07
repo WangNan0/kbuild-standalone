@@ -58,8 +58,10 @@ Currently, this project contains:
 Makefile.sample is also an simple example about how kbuild standalone can be
 used in other project by simply setting following make variables:
 
+* `KBUILD_STANDALONE_SRCDIRS:` source directories of this project.
 * `KBUILD_STANDALONE_TARGETS:` targets to build using kbuild standalone.
 * `<target>_GOAL:`             make goals list passed to `<target>/Makefile`.
+* `<target>_CONF:`             config of a target, like `need-builtin=1`.
 
 Then include Makefile.include which can be found using pkg-config.
 

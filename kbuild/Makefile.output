@@ -25,8 +25,9 @@ ifeq ($(abs_objtree),$(abs_srctree))
   $(error In-tree-building is not supported. Set "O" to build directory)
 endif
 # Set include-dir for next stage, so we can include scripts/xxx
-# (abs_kbuildtree) and Makefile (abs_srctree).
-MAKEFLAGS += --include-dir=$(abs_srctree) --include-dir=$(abs_kbuildtree)
+# (abs_kbuildtree) and Makefile (abs_srctree). Put abs_trans_srctree at head
+# to avoid `scripts` directories in abs_srctree be searched internally.
+MAKEFLAGS += --include-dir=$(abs_trans_srctree) --include-dir=$(abs_srctree) --include-dir=$(abs_kbuildtree)
 MAKEFLAGS += --no-print-directory
 
 PHONY += $(MAKECMDGOALS) sub-make
@@ -38,7 +39,7 @@ $(filter-out _all sub-make $(lastword $(MAKEFILE_LIST)), $(MAKECMDGOALS)) _all: 
 sub-make: prepare_objtree
 	$(Q)$(MAKE) -C $(abs_objtree) -f $(abs_top_makefile) $(MAKECMDGOALS)
 
-prepare_targets := $(addprefix _prepare_trans_src_dir_, $(KBUILD_STANDALONE_TARGETS))
+prepare_targets := $(addprefix _prepare_trans_src_dir_, $(KBUILD_STANDALONE_SRCDIRS))
 
 prepare_objtree: prepare_scripts $(prepare_targets)
 	$(Q)if [ ! -e $(abs_objtree)/scripts/basic/fixdep ]; then						\

@@ -28,4 +28,5 @@ build_targets := $(addprefix _build_,$(KBUILD_STANDALONE_TARGETS))
 all: $(build_targets)
 
 $(build_targets):
-	$(MAKE) $(build)=$(patsubst _build_%,%,$@) $($(addsuffix _GOAL, $(patsubst _build_%,%,$@)))
+	$(MAKE) $(build)=$(patsubst _build_%,%,$@) $($(addsuffix _GOAL, $(patsubst _build_%,%,$@))) \
+		$($(addsuffix _CONF, $(patsubst _build_%,%,$@)))

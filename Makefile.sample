@@ -4,10 +4,14 @@
 # Top makefile of kbuild standalone. This is also a sample makefile
 # to show how to use kbuild standalone.
 #
-# `KBUILD_STANDALONE_TARGETS:` targets to build using kbuild standalone
-# `<target>_GOAL:`             make goals list passed to `<target>/Makefile`
+# `KBUILD_STANDALONE_SRCDIRS:` source directories of this project.
+# `KBUILD_STANDALONE_TARGETS:` targets to build using kbuild standalone.
+# `<target>_GOAL:`             make goals list passed to `<target>/Makefile`.
+# `<target>_CONF:`             config of a target, like `need-builtin=1`.
 
 KBUILD_STANDALONE_TARGETS := fixdep kconfig unifdef
+KBUILD_STANDALONE_SRCDIRS := $(KBUILD_STANDALONE_TARGETS)
+
 kconfig_GOAL := kconfig/mconf kconfig/conf
 
 # Suggest to use pkg-config to find the location where Makefile.include
