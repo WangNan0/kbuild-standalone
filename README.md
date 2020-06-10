@@ -60,6 +60,7 @@ used in other project by simply setting following make variables:
 
 * `KBUILD_STANDALONE_SRCDIRS:` source directories of this project.
 * `KBUILD_STANDALONE_TARGETS:` targets to build using kbuild standalone.
+* `KBUILD_STANDALONE_PREPARE:` targets to build before `KBUILD_STANDALONE_TARGETS`
 * `<target>_GOAL:`             make goals list passed to `<target>/Makefile`.
 * `<target>_CONF:`             config of a target, like `need-builtin=1`.
 
