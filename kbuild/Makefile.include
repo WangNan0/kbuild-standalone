@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2020 Wang Nan <pi3orama@163.com>
 
+# Default target when cmdline is empty
+PHONY := _all
+_all:
+
 # If the user is running make -s (silent mode), suppress echoing of
 # commands
 
@@ -23,10 +27,6 @@ else
   include $(abs_kbuildtree)/Makefile.env
   include $(abs_kbuildtree)/Makefile.main
 endif
-
-# That's our default target when none is given on the command line
-PHONY := _all
-_all:
 
 PHONY += FORCE
 FORCE:
