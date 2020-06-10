@@ -8,8 +8,30 @@ _all:
 # If the user is running make -s (silent mode), suppress echoing of
 # commands
 
-ifeq ($(output_is_ready),)
-# output_is_ready is not set, this is first pass. Directly included
+# kbuild_stage is part of API. User makefile controls variables and
+# make targets can be seen by kbuild through kbuild_stage.
+# An example user makefile:
+#
+# ... Definitions should be seen in all stages, like KBUILD_STANDALONE_TARGETS.
+#
+# ifeq ($(kbuild_stage),)
+# ... Definitions provided for Makefile.output, like KBUILD_STANDALONE_SRCDIRS.
+# endif
+#
+# ifeq ($(kbuild_stage),1)
+# ... Definitions for Makefile.main, like KBUILD_STANDALONE_PREPARE.
+# endif
+#
+# makefile_include := $(shell pkg-config --variable=makefile_include kbuild-standalone)
+# include $(makefile_include)
+#
+# ifeq ($(kbuild_stage),2)
+# ... Definitions after Makefile.main.
+# endif
+#
+
+ifeq ($(kbuild_stage),)
+# kbuild_stage is not set, this is first pass. Directly included
 # by original makefile.
 # abs_kbuildtree is directory of kbuild standalone
 # abs_srctree is the Makefile which include Makefile.include.
@@ -21,9 +43,11 @@ ifeq ($(output_is_ready),)
 
   include $(abs_kbuildtree)/Makefile.head
   include $(abs_kbuildtree)/Makefile.output
-  output_is_ready := 1
-  export output_is_ready
+  kbuild_stage := 1
+  export kbuild_stage
 else
+  kbuild_stage := 2
+  export kbuild_stage
   include $(abs_kbuildtree)/Makefile.env
   include $(abs_kbuildtree)/Makefile.main
 endif
