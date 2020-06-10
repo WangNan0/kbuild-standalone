@@ -8,7 +8,7 @@ building_out_of_srctree := 1
 
 srctree := .source
 objtree := .
-VPATH	:= $(srctree)
+VPATH	:= $(srctree) $(abs_srctree)
 
 export building_out_of_srctree srctree objtree VPATH
 
