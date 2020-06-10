@@ -24,6 +24,14 @@ export abs_objtree abs_trans_srctree
 ifeq ($(abs_objtree),$(abs_srctree))
   $(error In-tree-building is not supported. Set "O" to build directory)
 endif
+
+# Define these 2 important variables here so user makefile don't need to wait for
+# the second pass 'make ..' (kbuild_stage moves to 2)
+srctree := .source
+objtree := .
+
+export srctree objtree
+
 # Set include-dir for next stage, so we can include scripts/xxx
 # (abs_kbuildtree) and Makefile (abs_srctree). Put abs_trans_srctree at head
 # to avoid `scripts` directories in abs_srctree be searched internally.
