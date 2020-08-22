@@ -17,7 +17,7 @@ DST="."
 rm -rf ${DST}/fixdep
 cp -rv ${LINUX_SRC}/scripts/basic ${DST}/fixdep
 
-for f in Kbuild.include  Makefile.build  Makefile.clean  Makefile.host  Makefile.lib; do
+for f in Kbuild.include  Makefile.build  Makefile.clean  Makefile.host  Makefile.lib Makefile.userprogs; do
   cp -v ${LINUX_SRC}/scripts/$f ${DST}/kbuild/scripts/$f
 done
 
