@@ -1,0 +1,15 @@
+# Example Kconfig file for kernel
+
+choice
+
+  prompt "GCC optimization level"
+  default CC_OPTIMIZE_O2
+
+  config CC_OPTIMIZE_O0
+    bool "Use -O0"
+  config CC_OPTIMIZE_O1
+    bool "Use -O1"
+  config CC_OPTIMIZE_O2
+    bool "Use -O2"
+
+endchoice

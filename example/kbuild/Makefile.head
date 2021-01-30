@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2020 Wang Nan <pi3orama@163.com>
+#
+# Makefile.head is included before stage1:
+# ifeq ($(kbuild_stage),)
+# include kbuild/Makefile.head
+# endif
+#
+# Which can see raw configuration at first round, before
+# adjusted by other part of makefile. For example, MAKECMDGOALS
+# reflect user input only at this stage.
+
+ifneq ($(words $(MAKECMDGOALS)),0)
+ifneq ($(words $(MAKECMDGOALS)),1)
+  $(error Only one make target is supported)
+endif
+endif

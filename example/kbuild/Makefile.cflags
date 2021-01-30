@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2020 Wang Nan <pi3orama@163.com>
+
+# An example makefile to show how to control gcc options
+
+optflgs += -g
+
+ifdef CONFIG_CC_OPTIMIZE_O2
+  optflgs += -O2
+endif
+ifdef CONFIG_CC_OPTIMIZE_O1
+  optflgs += -O1
+endif
+ifdef CONFIG_CC_OPTIMIZE_O0
+  optflgs += -O0
+endif
+
+KBUILD_CFLAGS += $(optflgs)
+KBUULD_AFLAGS += -g

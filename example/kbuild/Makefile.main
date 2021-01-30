@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2020 Wang Nan <pi3orama@163.com>
+
+# This is an example kernel main makefile
+
+KBUILD_CFLAGS += -Wall -Wextra
+
+INCLUDE := -I$(srctree)/kernel/include \
+	   -I$(objtree)/kernel/include \
+	   -I$(srctree)/arch/$(SRCARCH)/include \
+	   -I$(objtree)/arch/$(SRCARCH)/include
+
+KBUILD_CPPFLAGS += -D__KERNEL__
+
+# LINUXINCLUDE is API provided by kbuild
+LINUXINCLUDE += $(INCLUDE)
+
+export LINUXINCLUDE KBUILD_AFLAGS KBUILD_CPPFLAGS KBUILD_CFLAGS KBUILD_LIBS
+
+OUTPUT_THINLIBS := $(addsuffix /built-in.a,$(KBUILD_STANDALONE_TARGETS))
+
+$(OUTPUT_THINLIBS): $(addprefix _build_,$(KBUILD_STANDALONE_TARGETS))
+	@:
+
+cmd_link_kernel = $(CONFIG_SHELL) $< $@ $(OUTPUT_THINLIBS)
+# Manually include cmd file because we are not in Makefile.build.
+# It is required to make if_changes works
+-include .kernel.exec.cmd
+kernel.exec: kbuild/link-kernel-exec.sh $(OUTPUT_THINLIBS)
+	$(call if_changed,link_kernel)

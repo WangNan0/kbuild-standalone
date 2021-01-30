@@ -1,0 +1,7 @@
+# Example Kconfig file in ARCH
+
+config ARM
+  bool
+  default y
+
+source "kernel/Kconfig"

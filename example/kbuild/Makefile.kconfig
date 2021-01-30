@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2020 Wang Nan <pi3orama@163.com>
+# This file create kconfig related targets
+
+
+PHONY += menuconfig alldefconfig syncconfig oldconfig
+
+ifeq ($(quiet),silent_)
+  silent := -s
+endif
+
+KCONFIG_CONFIG ?= .config
+export KCONFIG_CONFIG
+
+menuconfig:
+	$(Q)$(KBUILD_MCONF) $(silent) $(abs_srctree)/Kconfig
+
+alldefconfig:
+	$(Q)$(KBUILD_CONF) $(silent) --$@ $(abs_srctree)/Kconfig
+
+oldconfig:
+	$(Q)$(KBUILD_CONF) $(silent) --$@ $(abs_srctree)/Kconfig
+
+syncconfig:
+	$(Q)$(KBUILD_CONF) $(silent) --$@ $(abs_srctree)/Kconfig
+
+$(KCONFIG_CONFIG):
+	@echo >&2 '***'
+	@echo >&2 '*** $@ not found!'
+	@echo >&2 '*** Use make {old,menu,sync,all,xx_}defconfig to generate one'
+
+include/conf/auto.conf: syncconfig
+	@:
+
+ifeq ($(filter menuconfig oldconfig alldefconfig syncconfig, $(MAKECMDGOALS)),)
+include include/config/auto.conf
+endif

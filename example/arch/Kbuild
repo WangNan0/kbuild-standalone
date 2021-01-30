@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2020 Wang Nan <pi3orama@163.com>
+
+obj-$(CONFIG_X86_64)	+= x86_64/
+obj-$(CONFIG_ARM)	+= arm/

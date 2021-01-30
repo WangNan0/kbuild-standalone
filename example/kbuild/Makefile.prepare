@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2020 Wang Nan <pi3orama@163.com>
+
+KBUILD_STANDALONE_PREPARE += gen_compiler_types_h
+
+define filechk_compiler_types.h
+mkdir -p $(srctree)/include/linux; touch $@
+endef
+
+$(srctree)/include/linux/compiler_types.h:
+	$(call filechk,compiler_types.h)
+
+gen_compiler_types_h: $(srctree)/include/linux/compiler_types.h
+	@:
+
+PHONY += gen_compiler_types_h

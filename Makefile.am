@@ -7,7 +7,8 @@ EXTRA_DIST = configure.ac	\
 	     kbuild		\
 	     kconfig		\
 	     fixdep		\
-	     unifdef
+	     unifdef		\
+	     example
 
 doc_DATA = README.md
 pkgdir = $(datarootdir)/kbuild-standalone

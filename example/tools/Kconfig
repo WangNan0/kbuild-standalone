@@ -1,0 +1,9 @@
+# Example Kconfig file
+
+menu "Example kconfig options in tools/"
+
+config EXAMPLE_OPTION
+  bool "This is an example option in KBUILD_STANDALONE_SRCDIRS"
+  default y
+
+endmenu

@@ -1,0 +1,6 @@
+# Example Kconfig file
+
+mainmenu "Example project for $(ARCH) configuration"
+
+source "arch/$(SRCARCH)/Kconfig"
+source "tools/Kconfig"
