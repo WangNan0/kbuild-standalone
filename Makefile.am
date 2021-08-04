@@ -24,6 +24,7 @@ scripts_DATA	= kbuild/scripts/Makefile.build	\
 		  kbuild/scripts/Makefile.clean	\
 		  kbuild/scripts/Makefile.lib	\
 		  kbuild/scripts/Makefile.host	\
+		  kbuild/scripts/Makefile.compiler	\
 		  kbuild/scripts/Kbuild.include
 
 pkgconfigdir = $(libdir)/pkgconfig
