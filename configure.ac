@@ -10,4 +10,5 @@ AC_INIT([kbuild-standalone],[5.17],[pi3orama@163.com])
 AC_CONFIG_SRCDIR([Makefile.am])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_CONFIG_FILES([Makefile])
-AC_OUTPUT([kbuild-standalone.pc])
+AC_CONFIG_FILES([kbuild-standalone.pc])
+AC_OUTPUT
