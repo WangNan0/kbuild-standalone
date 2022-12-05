@@ -6,7 +6,7 @@
 # by yocto. We can also use cmake but I am not very
 # familiar with it.
 
-AC_INIT([kbuild-standalone],[5.19],[pi3orama@163.com])
+AC_INIT([kbuild-standalone],[6.0],[pi3orama@163.com])
 AC_CONFIG_SRCDIR([Makefile.am])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_CONFIG_FILES([Makefile])
