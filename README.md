@@ -75,6 +75,6 @@ try to make them upstream then sync them back.
 
 Version number of this project comes from source version of Linux kernel.
 It contains 2 or 3 digits. The first 2 digits are version and patchlevel
-of corresponding Linux kernel (for exmaple, 5.6). The third digit is vesion
+of corresponding Linux kernel (for example, 5.6). The third digit is vesion
 of this project itself. Each time when bumping Linux kernel version, the third
 digit would be reset to 0 and ignored.
