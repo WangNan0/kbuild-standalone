@@ -8,10 +8,15 @@ function usage()
 
 if [ ! -d "$1" ];
 then
-  usage $0
+  LINUX_SRC="/usr/src/linux-headers-$(uname -r)"
+  if [ ! -d "$LINUX_SRC" ];
+  then
+    usage $0
+    else
+  echo "sync with $LINUX_SRC"
+  fi
 fi
 
-LINUX_SRC="$1"
 DST="."
 
 rm -rf ${DST}/fixdep
