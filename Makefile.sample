@@ -16,7 +16,7 @@ kconfig_GOAL := kconfig/mconf kconfig/conf
 
 # Suggest to use pkg-config to find the location where Makefile.include
 # should be found. If it is not found, use internal kbuild.
-# makefile_include := $(shell pkg-config --variable=makefile_include kbuild-standalone)
+makefile_include := $(shell pkg-config --variable=makefile_include kbuild-standalone)
 ifeq ($(makefile_include),)
   kbuild_standalone_path := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))/kbuild
   makefile_include := $(kbuild_standalone_path)/Makefile.include
