@@ -6,15 +6,18 @@ function usage()
   exit 1
 }
 
-if [ ! -d "$1" ];
+LINUX_SRC="$1"
+
+if [ ! -d "$LINUX_SRC" ];
 then
   LINUX_SRC="/usr/src/linux-headers-$(uname -r)"
-  if [ ! -d "$LINUX_SRC" ];
-  then
-    usage $0
-    else
+fi
+
+if [ ! -d "$LINUX_SRC" ];
+then
+  usage $0
+  else
   echo "sync with $LINUX_SRC"
-  fi
 fi
 
 DST="."
