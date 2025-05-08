@@ -1,5 +1,4 @@
 # Security Policy
 
 ## Reporting a Vulnerability
-
-(https://lore.kernel.org/linux-cve-announce/)
+See https://docs.kernel.org/process/security-bugs.html
